@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Restaurant Dashboard</title>
+    <style>
+        table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+        h2 { margin-top: 40px; color: #333; }
+    </style>
+</head>
+<body>
+    <h1>🍽 Restaurant Dashboard</h1>
+
+    <h2>Available Tables</h2>
+    <table>
+        <tr><th>Category</th><th>Available Tables</th></tr>
+        {% for cat in categories %}
+        <tr>
+            <td>{{ cat.get_category_display }}</td>
+            <td>{{ cat.available_tables }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+   
+
+    <h2>Bookings</h2>
+    <table>
+        <tr><th>Name</th><th>Table Type</th><th>Booking Time</th><th>Duration</th><th>Release Time</th><th>Leaft At</th></tr>
+        {% for b in bookings %}
+        <tr>
+            <td>{{ b.name }}</td>
+            <td>{{ b.table_type }}</td>
+            <td>{{ b.booking_time }}</td>
+            <td>{{ b.duration }}</td>
+            <td>{{ b.release_time }}</td>
+            <td>{{ b.seat_number }}</td>
+
+            <td>
+            {% if b.actual_end_time %}
+                {{ b.actual_end_time }}
+            {% else %}
+                Still Seated
+            {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table> 
+
+    <h2>Menu Items</h2>
+    <table>
+        <tr><th>Name</th><th>Price</th></tr>
+        {% for item in menu_items %}
+        <tr>
+            <td>{{ item.name }}</td>
+            <td>₹{{ item.price }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h2>All Orders</h2>
+    <ul>
+        {% for order in orders %}
+            <li>
+                {{ order.booking.name }} ordered 
+                {{ order.quantity }} x {{ order.item.name }} 
+                (Rs{{ order.item.price }} each) = 
+                <strong>₹{{ order.total_price }}</strong>
+            </li>
+        {% empty %}
+            <li>No orders yet.</li>
+        {% endfor %}
+    </ul>
+    <hr>
+<a href="{% url 'history' %}">
+    <button type="button">📜 View Booking History</button>
+</a>
+<a href="{% url 'book_table'%}">
+    <button type="button">book_table</button>
+</a>
+
+</body>
+</html>

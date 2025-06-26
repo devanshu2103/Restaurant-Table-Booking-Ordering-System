@@ -1,0 +1,23 @@
+<h1>Booking History</h1>
+{% if complete_booking %}
+    <ul>
+        {% for booking in complete_booking  %}
+            <li>
+                <strong>{{ booking.name }}</strong> - 
+                {{ booking.table_type.category }}-Seater |
+                Booked at: {{ booking.booking_time }} |
+                Left at: {{ booking.actual_end_time }} |
+                Time used: 
+                {% if booking.time_used %}
+                    {{ booking.time_used }}
+                {% else %}
+                    Not Available
+                {% endif %}
+            </li>
+
+
+        {% endfor %}
+    </ul>
+
+
+{% endif %}

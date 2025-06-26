@@ -1,0 +1,27 @@
+<h2>Place an Order</h2>
+
+<form method="POST">
+    {% csrf_token %}
+    <label>Select Booking:</label>
+    <select name="booking">
+        {% for b in bookings %}
+            <option value="{{ b.id }}">{{ b.name }} - {{ b.table_type.category }}-Seater</option>
+        {% endfor %}
+    </select><br><br>
+
+    <label>Select Menu Item:</label>
+    <select name="item">
+        {% for item in menu_items %}
+            <option value="{{ item.id }}">{{ item.name }} - ₹{{ item.price }} ({{ item.category }})</option>
+        {% endfor %}
+    </select><br><br>
+
+    <label>Quantity:</label>
+    <input type="number" name="quantity" min="1" value="1"><br><br>
+
+    <button type="submit">Place Order</button>
+</form>
+
+<a href="{% url 'dashboard' %}">
+    <button type="button">Go to Dashboard</button>
+</a>
